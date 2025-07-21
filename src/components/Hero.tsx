@@ -5,8 +5,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Hero() {
-  const images = ["/image5.png", "/image2.png", "/image3.png"];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const media = [
+    { image: "/image5.png", video: "/image5.mp4" },
+    { image: "/image2.png", video: null },
+    { image: "/image3.png", video: "/image3.mp4" },
+  ];
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -17,34 +21,59 @@ export default function Hero() {
     if (!mounted) return;
 
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Change image every 5 seconds
+      setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % media.length);
+    }, 5000); // Change media every 5 seconds
 
     return () => clearInterval(interval);
-  }, [images.length, mounted]);
+  }, [media.length, mounted]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
       {/* Background with gradient overlay */}
       <div className="absolute inset-0 z-0">
-        {images.map((image, index) => (
+        {media.map((item, index) => (
           <div
-            key={image}
+            key={item.image}
             className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentImageIndex ? "opacity-100" : "opacity-0"
+              index === currentMediaIndex ? "opacity-100" : "opacity-0"
             }`}
           >
             <div className="absolute inset-0 scale-175 sm:scale-100">
-              <Image
-                src={image}
-                alt={`Dressage horse and rider ${index + 1}`}
-                fill
-                className="object-contain sm:object-cover"
-                style={{
-                  objectPosition: "center 30%",
-                }}
-                priority={index === 0}
-              />
+              {item.video ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+                  style={{
+                    objectPosition: "center 30%",
+                  }}
+                >
+                  <source src={item.video} type="video/mp4" />
+                  {/* Fallback to image if video fails */}
+                  <Image
+                    src={item.image}
+                    alt={`Dressage horse and rider ${index + 1}`}
+                    fill
+                    className="object-contain sm:object-cover"
+                    style={{
+                      objectPosition: "center 30%",
+                    }}
+                  />
+                </video>
+              ) : (
+                <Image
+                  src={item.image}
+                  alt={`Dressage horse and rider ${index + 1}`}
+                  fill
+                  className="object-contain sm:object-cover"
+                  style={{
+                    objectPosition: "center 30%",
+                  }}
+                  priority={index === 0}
+                />
+              )}
             </div>
           </div>
         ))}
