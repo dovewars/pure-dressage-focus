@@ -55,7 +55,7 @@ export default function Hero() {
       <div className="absolute top-[200px] left-0 right-0 sm:relative sm:top-auto z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in-up space-y-0 sm:space-y-[40px]">
           <div className="space-y-6 sm:space-y-16">
-            <h1 className="text-5xl sm:text-5xl md:text-7xl font-[family-name:var(--font-heading)] font-bold">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-[family-name:var(--font-heading)] font-bold">
               <span className="block sm:inline">Master Your</span>{" "}
               <span className="gold-shimmer block sm:inline">
                 Dressage Journey
