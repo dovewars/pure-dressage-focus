@@ -27,6 +27,25 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [media.length, mounted]);
 
+  // Reset video when index changes
+  useEffect(() => {
+    // Get all media containers
+    const mediaContainers = document.querySelectorAll('[data-media-index]');
+    mediaContainers.forEach((container) => {
+      const index = parseInt(container.getAttribute('data-media-index') || '0');
+      const video = container.querySelector('video');
+      
+      if (video) {
+        if (index === currentMediaIndex) {
+          video.currentTime = 0;
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    });
+  }, [currentMediaIndex]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0">
       {/* Background with gradient overlay */}
@@ -34,6 +53,7 @@ export default function Hero() {
         {media.map((item, index) => (
           <div
             key={item.image}
+            data-media-index={index}
             className={`absolute inset-0 transition-opacity duration-1000 ${
               index === currentMediaIndex ? "opacity-100" : "opacity-0"
             }`}
@@ -49,14 +69,6 @@ export default function Hero() {
                   className="absolute inset-0 w-full h-full object-contain sm:object-cover"
                   style={{
                     objectPosition: "center 30%",
-                    display: index === currentMediaIndex ? "block" : "none",
-                  }}
-                  onLoadedMetadata={(e) => {
-                    const video = e.currentTarget;
-                    if (index === currentMediaIndex) {
-                      video.currentTime = 0;
-                      video.play();
-                    }
                   }}
                 >
                   <source src={item.video} type="video/mp4" />
