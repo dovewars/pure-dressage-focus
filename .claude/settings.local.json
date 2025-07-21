@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app:*)",
+      "Bash(ls:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(source ~/.bashrc)",
+      "Bash(dressage:*)",
+      "Bash(bash:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(pkill:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
