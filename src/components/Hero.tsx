@@ -22,7 +22,7 @@ export default function Hero() {
 
     const interval = setInterval(() => {
       setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % media.length);
-    }, 5000); // Change media every 5 seconds
+    }, 4000); // Change media every 4 seconds
 
     return () => clearInterval(interval);
   }, [media.length, mounted]);
@@ -41,6 +41,7 @@ export default function Hero() {
             <div className="absolute inset-0 scale-175 sm:scale-100">
               {item.video ? (
                 <video
+                  key={item.video}
                   autoPlay
                   muted
                   loop
@@ -48,19 +49,17 @@ export default function Hero() {
                   className="absolute inset-0 w-full h-full object-contain sm:object-cover"
                   style={{
                     objectPosition: "center 30%",
+                    display: index === currentMediaIndex ? "block" : "none",
+                  }}
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    if (index === currentMediaIndex) {
+                      video.currentTime = 0;
+                      video.play();
+                    }
                   }}
                 >
                   <source src={item.video} type="video/mp4" />
-                  {/* Fallback to image if video fails */}
-                  <Image
-                    src={item.image}
-                    alt={`Dressage horse and rider ${index + 1}`}
-                    fill
-                    className="object-contain sm:object-cover"
-                    style={{
-                      objectPosition: "center 30%",
-                    }}
-                  />
                 </video>
               ) : (
                 <Image

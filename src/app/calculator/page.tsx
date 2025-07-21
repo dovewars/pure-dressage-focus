@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { dressageTests, getTestById, calculateMaxScore } from '@/data/dressageTests';
 import TestSelector from '@/components/calculator/TestSelector';
@@ -10,7 +9,6 @@ import ScoreInput from '@/components/calculator/ScoreInput';
 import MovementAnalysis from '@/components/calculator/MovementAnalysis';
 
 export default function CalculatorPage() {
-  const router = useRouter();
   const [selectedTestId, setSelectedTestId] = useState(dressageTests[0].id);
   const [movementScores, setMovementScores] = useState<Record<number, number>>({});
   const [collectiveScores, setCollectiveScores] = useState<Record<string, number>>({});
