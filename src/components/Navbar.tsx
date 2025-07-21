@@ -1,16 +1,37 @@
+'use client';
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [padding, setPadding] = useState('20px');
+
+  useEffect(() => {
+    const updatePadding = () => {
+      if (window.innerWidth >= 768) {
+        setPadding('60px');
+      } else if (window.innerWidth >= 640) {
+        setPadding('40px');
+      } else {
+        setPadding('20px');
+      }
+    };
+
+    updatePadding();
+    window.addEventListener('resize', updatePadding);
+    return () => window.removeEventListener('resize', updatePadding);
+  }, []);
+
   return (
-    <nav
+    <nav 
       className="fixed top-0 w-full backdrop-blur-sm z-50"
-      style={{ paddingLeft: "60px", paddingRight: "60px" }}
+      style={{ paddingLeft: padding, paddingRight: padding }}
     >
-      <div className="flex items-center justify-between h-24">
+      <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <span
-            className="text-4xl font-bold"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold"
             style={{ fontFamily: "Playfair Display, serif" }}
           >
             <span className="text-[var(--text-primary)]">Pure</span>{" "}
